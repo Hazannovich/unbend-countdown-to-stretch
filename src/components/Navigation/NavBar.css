@@ -1,0 +1,94 @@
+.MenuBar {
+    background-color:black;
+    color:white;
+    transform:rotate(33deg);
+    -ms-transform: rotate(33deg);
+    margin-top: 19.5rem;
+
+
+    /*-webkit-transform: rotate(5deg); !* Chrome, Safari, Opera *!*/
+}
+* { box-sizing: border-box; }
+ul {
+    padding-left: 20%;
+    height: 2.500em;
+    width: 100%;
+    margin: 0;
+    /*padding: 0;*/
+    background: #EEE;
+
+    font-size: 16px;
+}
+li {
+    position: relative;
+    display: block;
+    float: left;
+    margin-right: 1.563em;
+    height: 100%;
+    width: 6.25em;
+
+    cursor: pointer;
+    user-select: none;
+
+    background: #EEE;
+    color: #555;
+    text-align: center;
+    line-height: 2.5em;
+}
+li::before {
+    content: '';
+    position: absolute;
+    display: block;
+
+    left: -1.5em;
+
+    width: 0;
+    height: 0;
+
+    border-top: 2.5em solid transparent;
+    border-right: 1.563em solid #EEE;
+}
+li::after {
+    content: '';
+    position: absolute;
+    display: block;
+
+    top: 0;
+    right: -1.5em;
+
+    width: 0;
+    height: 0;
+
+    border-top: 2.5em solid #EEE;
+    border-right: 1.563em solid transparent;
+}
+
+/* Hover */
+
+li:hover {
+    color: #666;
+    background: #CCC;
+}
+li:hover::after {
+    border-top: 2.5em solid #CCC;
+    border-right: 1.563em solid transparent;
+}
+li:hover::before {
+    border-top: 2.5em solid transparent;
+    border-right: 1.563em solid #CCC;
+}
+
+/* Active */
+
+li:active {
+    color: #BBB;
+    background: #DDD;
+}
+li:active::after {
+    border-top: 2.5em solid #DDD;
+    border-right: 1.563em solid transparent;
+}
+li:active::before {
+    border-top: 2.5em solid transparent;
+    border-right: 1.563em solid #DDD;
+}
