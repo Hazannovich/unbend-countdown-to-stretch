@@ -1,6 +1,7 @@
 import React from "react";
 import NavButton from "./Buttons";
 import {RotatedDiv} from "./CostumDivs";
+import {AnimatePresence, motion} from "framer-motion";
 
 const NavBar = (props) => {
 
@@ -21,37 +22,70 @@ const NavBar = (props) => {
     const itemMenu = [
         "Register",
         "Login",
-        props.children,
         "Timer",
         "About",
     ]
 
     return (
-        <div>
-            <div className="fixed left-0 right-0 bg-primary text-secondary box-border">
-                <div className="static justify-center items-center h-screen w-screen">
-                    <RotatedDiv>
-                        <div className={" flex w-screen h-screen justify-around items-center" +
-                            " box-border"}>
-                            {itemMenu.map((itemName, index) => {
-                                return <div key={String(itemName)}
-                                            className={"grid grid-cols-1 sm:flex w-screen h-screen justify-around" +
-                                                " items-center"}>
-                                    <RotatedDiv userInput={-1} key={String(itemName)}>
-                                        <div key={String(itemName)}
-                                             className={"flex justify-center grow m-0 sm:h-1/5" +
-                                                 " box-border px-0 py-0 text-2xl sm:text-lg"}>
-                                            {(index === 2 ? itemMenu[2] :
-                                                <NavButton itemTitle={String(itemName)}/>)}
-                                        </div>
-                                    </RotatedDiv>
-                                </div>
-                            })}
+        <AnimatePresence>
+            <div
+                className="fixed bg-primary text-secondary h-screen w-screen">
+                <RotatedDiv>
+                    <div className={" flex w-screen h-screen justify-center"}>
+                        <div
+                            className={"m-auto"}>
+                            <RotatedDiv userInput={-1}>
+                                <NavButton itemTitle={itemMenu[0]}/>
+                            </RotatedDiv>
                         </div>
-                    </RotatedDiv>
-                </div>
+                        <div
+                            className={"m-auto "}>
+                            <RotatedDiv userInput={-1}>
+                                <NavButton itemTitle={itemMenu[1]}/>
+                            </RotatedDiv>
+                        </div>
+                        <div
+                            className={"m-auto"}>
+                            <RotatedDiv userInput={-1}>
+                                <motion.div
+                                    layout
+                                    key={props.key}
+                                    initial={{
+                                        opacity: 0,
+                                        y: 100
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                        y: 100,
+                                    }}
+                                    transition={{duration: 0.8}}
+                                >
+                                    {props.children}
+                                </motion.div>
+
+                            </RotatedDiv>
+                        </div>
+                        <div
+                            className={"m-auto"}>
+                            <RotatedDiv userInput={-1}>
+                                <NavButton itemTitle={itemMenu[2]}/>
+                            </RotatedDiv>
+                        </div>
+                        <div
+                            className={"m-auto"}>
+                            <RotatedDiv userInput={-1}>
+                                <NavButton itemTitle={itemMenu[3]}/>
+                            </RotatedDiv>
+                        </div>
+
+                    </div>
+                </RotatedDiv>
             </div>
-        </div>
+        </AnimatePresence>
     )
 }
 

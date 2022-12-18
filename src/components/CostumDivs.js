@@ -32,19 +32,29 @@ export const RotatedDiv = (props) => {
 }
 
 export const AnimatedDiv = (props) => {
+
     return (
-        <motion.div
-            initial={{
-                y: window.innerHeight,
-                x: 0
-            }}
-            animate={{y: 0, x: 0}}
-            // exit={{
-            //     x: window.innerWidth
-            // }}
-            transition={{duration: 0.5}}
-        >
-            {props.children}
-        </motion.div>
+        <>
+            <motion.div
+                layout
+                key={props.key}
+                initial={{
+                    opacity: 0,
+                    y: 100
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0
+                }}
+                exit={{
+                    opacity: 0,
+                    y: 100,
+                    x: 200
+                }}
+                transition={{duration: 0.8}}
+            >
+                {props.children}
+            </motion.div>
+        </>
     )
 }

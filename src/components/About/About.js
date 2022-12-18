@@ -5,11 +5,17 @@ import {AnimatedDiv} from "../CostumDivs";
 const About = () => {
 
     return (
-        <div>
-            <AnimatedDiv>
-                Israel Hazan
-            </AnimatedDiv>
-        </div>
+        <>
+            <div className="flex px-9 h-screen text-xl text-secondary">
+                <div className={"m-auto"}>
+                    {/*<AnimatedDiv key={"About"}>*/}
+                    <div>
+                        Israel Hazan
+                    </div>
+                    {/*</AnimatedDiv>*/}
+                </div>
+            </div>
+        </>
     )
 }
 

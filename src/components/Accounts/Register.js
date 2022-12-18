@@ -1,33 +1,60 @@
-import React from "react";
+import React, {useRef} from "react";
 import {AnimatedDiv} from "../CostumDivs";
 
 
 const Register = () => {
+    const emailRef = React.useRef();
+    const passwordRef = React.useRef();
+    const passwordConfirmRef = React.useRef();
+    const firstNameRef = React.useRef();
+
+    function RegisterSubmitHandler(event) {
+        event.preventDefault();
+        const newAccount = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            passwordConfirm: passwordConfirmRef.current.value,
+            firstName: firstNameRef.current.value
+        }
+    }
 
     return (
-        <div>
-            <AnimatedDiv>
-                <form>
-                    <input type="email" className="bg-primary border-solid border-2 border-gray-700" id="email"
-                           name="email" placeholder="Email"/>
-                    <br></br>
-                    <input className={"my-2 bg-primary border-solid border-2 border-gray-700"} type="password"
-                           id="password" name="password"
-                           placeholder="Password"/>
-                    <br></br>
-                    <input type="password" className="bg-primary border-solid border-2 border-gray-700"
-                           id="confirmPassword" name="confirmPassword"
-                           placeholder="Confirm Password"/>
-                    <br></br>
-                    <input className={"my-2 bg-primary border-solid border-2 border-gray-700"} type="text" id="name"
-                           name="name"
-                           placeholder="First Name"/>
-                    <div className="text-white flex justify-center items-center">
-                        <button className={"hover:text-rose-500"} type="submit">Register</button>
+        <>
+            <div className="flex h-screen text-xl text-secondary">
+                <div className={"m-auto"}>
+                    {/*<AnimatedDiv key={"Register"}>*/}
+                    <div>
+                        <form onSubmit={RegisterSubmitHandler}>
+                            <input ref={emailRef} type="email"
+                                   className="bg-primary text-base border-solid border-2 border-gray-700" id="email"
+                                   name="email" placeholder="Email"/>
+                            <br></br>
+                            <input ref={passwordRef}
+                                   className={"text-base my-2 bg-primary border-solid border-2 border-gray-700"}
+                                   type="password"
+                                   id="password" name="password"
+                                   placeholder="Password"/>
+                            <br></br>
+                            <input ref={passwordConfirmRef} type="password"
+                                   className="bg-primary text-base border-solid border-2 border-gray-700"
+                                   id="confirmPassword" name="confirmPassword"
+                                   placeholder="Confirm Password"/>
+                            <br></br>
+                            <input ref={firstNameRef}
+                                   className={"my-2 text-base bg-primary border-solid border-2 border-gray-700"}
+                                   type="text"
+                                   id="name"
+                                   name="name"
+                                   placeholder="First Name"/>
+                            <div className="text-white flex justify-center items-center">
+                                <button className={"hover:text-rose-500"} type="submit">Register</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </AnimatedDiv>
-        </div>
+                    {/*</AnimatedDiv>*/}
+                </div>
+            </div>
+        </>
     )
 }
 
