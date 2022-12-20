@@ -4,6 +4,9 @@ import {motion} from "framer-motion";
 
 const RotateDiv = styled.div`
   transform: rotate(${props => (props.userInput === -2 ? props.degrees : (props.degrees !== 90 ? props.degrees * props.userInput : -90))}deg);
+  padding: 0 2rem;
+  align-items: center;
+  justify-content: center;
 `;
 export const RotatedDiv = (props) => {
     let degree = Math.atan(window.innerHeight / window.innerWidth) * 180 / Math.PI

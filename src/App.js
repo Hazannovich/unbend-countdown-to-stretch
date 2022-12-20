@@ -5,9 +5,9 @@ import AnimatedRoutes from "./components/AnimatedRoutes";
 function App() {
 
     return (
-        <div>
+        <>
             <AnimatedRoutes/>
-        </div>
+        </>
     );
 }
 

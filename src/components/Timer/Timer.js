@@ -1,60 +1,89 @@
 import React, {useState, useEffect} from "react";
 import {motion} from "framer-motion";
-import {AnimatedDiv} from "../CostumDivs";
-import {TimerBreakWorkButton} from "../Buttons";
+
 
 const Timer = () => {
 
     const [defaultTime, setDefaultTime] = useState(25);
-    const [timer, setTime] = React.useState({minutes: defaultTime, seconds: 0});
+    const [defaultBreakTime, setDefaultBreakTime] = useState(5);
+    const [timer, setTimer] = useState({minutes: defaultTime, seconds: 0});
     const [isActive, setIsActive] = useState(false);
+    const [isBreak, setIsBreak] = useState(false);
     const [isReset, setIsReset] = useState(false);
-    const [userInput, setUserInput] = useState(defaultTime);
-
+    const [timeIndicator, setTimeIndicator] = useState(0);
+    const [isStarted, setIsStarted] = useState(false);
     useEffect(() => {
-        if (isReset) {
-            setIsActive(() => false)
-            setTime(() => {
-                return {minutes: defaultTime, seconds: 0}
-            })
-            setIsReset(() => false)
-        }
         const interval = setTimeout(() => {
             if (isActive) {
-                if (timer.seconds === 0) {
-                    setTime({minutes: timer.minutes - 1, seconds: 59})
-                } else {
-                    setTime({minutes: timer.minutes, seconds: timer.seconds - 1})
-                }
+                setIsStarted(() => true);
                 if (timer.minutes === 0 && timer.seconds === 0) {
-                    setIsReset(true)
+                    setIsBreak((currentStatus) => !currentStatus)
+                    if (isBreak) {
+                        setTimer(() => {
+                            return {minutes: defaultBreakTime, seconds: 0}
+                        })
+                    } else {
+                        setTimer(() => {
+                            return {minutes: defaultTime, seconds: 0}
+                        })
+                    }
+                } else if (timer.seconds === 0) {
+                    setTimer({minutes: timer.minutes - 1, seconds: 59});
+                    if (isBreak) {
+                        setTimeIndicator(() => defaultBreakTime - timer.minutes)
+                    } else {
+                        setTimeIndicator(() => defaultTime - timer.minutes)
+                    }
+                } else {
+                    setTimer({minutes: timer.minutes, seconds: timer.seconds - 1});
+                }
+                if (isBreak) {
+                    // <a href="#">break video </a>
                 }
             }
+
         }, 1000)
         return () => {
             clearTimeout(interval)
         }
-    }, [isReset, defaultTime, isActive, timer.minutes, timer.seconds])
+    }, [isBreak, isActive, timer, defaultTime, defaultBreakTime, timeIndicator])
+    useEffect(() => {
+        if (isReset) {
+            setIsActive(() => false)
+            setIsStarted(() => false)
+        }
+        if (!isStarted) {
+            setTimer(() => {
+                return {minutes: defaultTime, seconds: 0}
+            })
+        }
+        setIsReset(() => false)
+    }, [isReset, defaultTime, isStarted])
 
-    // const userChangeHandler = () => {
-    //     setDefaultTime(userInput)
-    //     setIsReset(true)
-    // }
-    const userInputHandler = (event) => {
-        setUserInput(event.target.value)
+    const defaultTimeHandler = (amount) => {
+        return setDefaultTime((curr) => {
+                if (curr + amount >= 1) {
+                    return curr + amount;
+                }
+                return curr;
+            }
+        )
     }
-
-    const StartTimerHandler = () => {
-        setIsActive(currentIsActive => !currentIsActive)
+    const defaultBreakTimeHandler = (amount) => {
+        return setDefaultBreakTime((curr) => {
+            if (curr + amount > 0) {
+                return curr + amount;
+            }
+            return curr;
+        })
     }
-
 
     return (
         <div
-            className="flex px-9 h-screen text-xl text-secondary">
-            <div className={"m-auto"}>
-                {/*<AnimatedDiv key={"Timer"}>*/}
-                <div className={"text-2xl text-white flex justify-center items-center"}>
+            className=" flex h-screen text-xl text-secondary">
+            <div
+                className=" py-5 rounded-2xl border-white border-solid border-2 shadow-2xl shadow-inner drop-shadow-2xl m-auto">
+                <div className={" text-4xl text-neutral-300 flex justify-center items-center"}>
                     <motion.h1
                         className={(isActive ? "" : "")}>{timer.minutes.toLocaleString('en-US', {
                         minimumIntegerDigits: 2
@@ -62,41 +91,60 @@ const Timer = () => {
                         minimumIntegerDigits: 2
                     })}</motion.h1>
                 </div>
-                <div>
-                    <div className="flex justify-center items-center">
+                <div className=" p-2 flex justify-center items-center">
+                    <motion.button
+                        whileHover={{scale: 1.1}}
+                        transition={{duration: 0.1}}
+                        whileTap={{scale: 0.8}}
+                        className="left-0 p-2"
+                        onClick={() => setIsActive(currentIsActive => !currentIsActive)}>{isActive ? 'Stop' : 'Start'}
+                    </motion.button>
+                    <motion.button
+                        whileHover={{scale: 1.1}}
+                        transition={{duration: 0.1}}
+                        whileTap={{scale: 0.8}}
+                        className="p-2"
+                        onClick={() => setIsReset(() => true)}>Reset
+                    </motion.button>
+                </div>
+                <form>
+                    <div className="p-2 flex justify-center items-center">
+                        <label className="p-2">Work:</label>
                         <motion.button
                             whileHover={{scale: 1.1}}
                             transition={{duration: 0.1}}
                             whileTap={{scale: 0.8}}
-                            className="left-0 pr-2"
-                            onClick={StartTimerHandler}>{isActive ? 'Stop' : 'Start'}
+                            type={"button"}
+                            onClick={() => defaultTimeHandler(-1)}>-
                         </motion.button>
+                        <span className="text-neutral-300">{defaultTime}</span>
                         <motion.button
                             whileHover={{scale: 1.1}}
                             transition={{duration: 0.1}}
                             whileTap={{scale: 0.8}}
-                            className="right-0 pl-2"
-                            onClick={() => setIsReset(() => true)}>Reset
+                            type={"button"}
+                            onClick={() => defaultTimeHandler(1)}>+
                         </motion.button>
                     </div>
-                    <form>
-                        <div className="flex justify-center items-center">
-                            <label className="pr-1">Work:</label>
-                            {/*<input type={'number'} min={1} onChange={userInputHandler} onBlur={userChangeHandler}*/}
-                            {/*       value={userInput}*/}
-                            {/*       className="w-12 bg-primary py-2"/>*/}
-                            <TimerBreakWorkButton val={25}></TimerBreakWorkButton>
-                        </div>
-                        <div className="flex justify-center items-center">
-                            <label className="pr-1">Break:</label>
-                            <TimerBreakWorkButton val={5}></TimerBreakWorkButton>
-                            {/*<input type={'number'} min={1} onChange={userInputHandler} onBlur={userChangeHandler}*/}
-                            {/*       value={5}*/}
-                            {/*       className="w-12 bg-primary "/>*/}
-                        </div>
-                    </form>
-                </div>
-                {/*</AnimatedDiv>*/}
+                    <div className="flex p-2 justify-center items-center">
+                        <label className="p-2">Break:</label>
+                        <motion.button
+                            whileHover={{scale: 1.1}}
+                            transition={{duration: 0.1}}
+                            whileTap={{scale: 0.8}}
+                            type={"button"}
+                            onClick={() => defaultBreakTimeHandler(-1)}>-
+                        </motion.button>
+                        <span className="text-neutral-300">{defaultBreakTime}</span>
+                        <motion.button
+                            whileHover={{scale: 1.1}}
+                            transition={{duration: 0.1}}
+                            whileTap={{scale: 0.8}}
+                            type={"button"}
+                            onClick={() => defaultBreakTimeHandler(1)}>+
+                        </motion.button>
+                    </div>
+                </form>
             </div>
         </div>
     )

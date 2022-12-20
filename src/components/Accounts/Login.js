@@ -1,14 +1,12 @@
 import React from "react";
-import {AnimatedDiv} from "../CostumDivs";
 
 
 const Login = () => {
 
 
     return (
-        <div className="flex h-screen text-xl text-secondary">
+        <div className="flex px-0.5 h-screen text-xl text-secondary">
             <div className={"m-auto"}>
-                {/*<AnimatedDiv key={"Login"}>*/}
                 <div>
                     <form>
                         <input className="bg-primary text-base border-solid border-2 border-gray-700" type="email"
@@ -24,7 +22,6 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-                {/*</AnimatedDiv>*/}
             </div>
         </div>
     )
