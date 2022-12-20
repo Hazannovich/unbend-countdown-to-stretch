@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="remixicon" level="application" />
+    <orderEntry type="library" name="daisyui" level="application" />
   </component>
 </module>

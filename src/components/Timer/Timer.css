@@ -1,0 +1,31 @@
+.fadeInTimer {
+    animation: 1.3s fadeIn ease-in-out;
+}
+
+.fadeOutTimer {
+    animation: 1.3s fadeOut ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

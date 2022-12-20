@@ -1,24 +1,10 @@
 import React from "react";
 import NavButton from "./Buttons";
-import {RotatedDiv} from "./CostumDivs";
-import {AnimatePresence, motion} from "framer-motion";
+import {Drawer, RotatedDiv, RotatedItemDiv} from "./CostumDivs";
+import {Link} from "react-router-dom";
 
 const NavBar = (props) => {
 
-
-    // const PositionsChangeHandler = (nextItem) => {
-    //     setItemPositions(
-    //         props.itemPositions.map((item, index) => {
-    //             if (item === nextItem) {
-    //                 return props.itemPositions[2]
-    //             } else if (index === 2) {
-    //                 return nextItem;
-    //             }
-    //             return item;
-    //         })
-    //     );
-    //     setPrevPosition(itemPositions);
-    // }
     const itemMenu = [
         "Register",
         "Login",
@@ -27,65 +13,35 @@ const NavBar = (props) => {
     ]
 
     return (
-        <AnimatePresence>
-            <div
-                className="fixed bg-primary text-secondary h-screen w-screen">
-                <RotatedDiv>
-                    <div className={" flex w-screen h-screen justify-center"}>
-                        <div
-                            className={"m-auto"}>
-                            <RotatedDiv userInput={-1}>
-                                <NavButton itemTitle={itemMenu[0]}/>
-                            </RotatedDiv>
-                        </div>
-                        <div
-                            className={"m-auto "}>
-                            <RotatedDiv userInput={-1}>
-                                <NavButton itemTitle={itemMenu[1]}/>
-                            </RotatedDiv>
-                        </div>
-                        <div
-                            className={"m-auto"}>
-                            <RotatedDiv userInput={-1}>
-                                <motion.div
-                                    layout
-                                    key={props.key}
-                                    initial={{
-                                        opacity: 0,
-                                        y: 100
-                                    }}
-                                    animate={{
-                                        opacity: 1,
-                                        y: 0
-                                    }}
-                                    exit={{
-                                        opacity: 0,
-                                        y: 100,
-                                    }}
-                                    transition={{duration: 0.8}}
-                                >
-                                    {props.children}
-                                </motion.div>
-
-                            </RotatedDiv>
-                        </div>
-                        <div
-                            className={"m-auto"}>
-                            <RotatedDiv userInput={-1}>
-                                <NavButton itemTitle={itemMenu[2]}/>
-                            </RotatedDiv>
-                        </div>
-                        <div
-                            className={"m-auto"}>
-                            <RotatedDiv userInput={-1}>
-                                <NavButton itemTitle={itemMenu[3]}/>
-                            </RotatedDiv>
-                        </div>
-
+        <div
+            className="fixed container sm:text-base items-center mx-auto text-neutral-300">
+            <Link to="/"
+                  className="px-5 badge badge-outline badge-lg  text-2xl sm:text-base  m-2 text-red-500">Unbend</Link>
+            {/*<img className={"static justify-items-start"} src="../logo.png" alt="logo" width={96} height={96}/>*/}
+            <RotatedDiv>
+                <div className="flex h-screen w-screen justify-evenly ">
+                    <div className="flex sm:relative sm:right-[1rem] mr-auto sm:mx-0 sm:mr-0">
+                        <RotatedItemDiv userInput={-1}><NavButton itemTitle={itemMenu[0]}/></RotatedItemDiv>
                     </div>
-                </RotatedDiv>
-            </div>
-        </AnimatePresence>
+                    <div className="flex sm:relative mr-auto sm:mr-[10rem] sm:right-[3rem] sm:ml-0">
+                        <RotatedItemDiv userInput={-1}><NavButton itemTitle={itemMenu[1]}/></RotatedItemDiv>
+                    </div>
+                    <div
+                        className="flex mx-[3rem]  sm:w-[0rem] sm:mr-[6rem] sm:top-[0rem] sm:ml-0 sm:relative sm:top-0 sm:right-[5rem]">
+                        <RotatedItemDiv userInput={-1}>
+                            {props.children}
+                        </RotatedItemDiv>
+                    </div>
+                    <div className="flex  ml-auto sm:relative sm:right-[3rem] sm:mx-0">
+                        <RotatedItemDiv userInput={-1}><NavButton itemTitle={itemMenu[2]}/></RotatedItemDiv>
+                    </div>
+                    <div className="flex sm:relative sm:right-[4.5rem] ml-auto mr-1 sm:mx-0">
+                        <RotatedItemDiv userInput={-1}><NavButton itemTitle={itemMenu[3]}/>
+                        </RotatedItemDiv>
+                    </div>
+                </div>
+            </RotatedDiv>
+        </div>
     )
 }
 

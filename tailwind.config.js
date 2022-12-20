@@ -7,7 +7,9 @@ module.exports = {
         extend: {
             colors: {
                 "primary": "#112B3C",
-                "secondary": "#F66B0E"
+                "secondary": "#F66B0E",
+                "logo": "#90a9d7",
+                "carving": "#8e6442",
             },
             rotate: {
                 '25': '25deg',
@@ -56,9 +58,15 @@ module.exports = {
 
                 'md': {'max': '767px'},
 
-                'sm': {'max': '639px'},
+                'sm': {'max': "639px"},
+
+
+            },
+            backgroundImage: {
+                'main': "url('src/bg-pic.jpg')",
+                // 'footer-texture': "url('/img/footer-texture.png')",
             }
         }
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/typography"), require("daisyui")],
 }
