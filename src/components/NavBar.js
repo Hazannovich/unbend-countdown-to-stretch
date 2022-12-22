@@ -1,6 +1,6 @@
 import React from "react";
 import NavButton from "./Buttons";
-import {Drawer, RotatedDiv, RotatedItemDiv} from "./CostumDivs";
+import {RotatedDiv, RotatedItemDiv} from "./CostumDivs";
 import {Link} from "react-router-dom";
 
 const NavBar = (props) => {
