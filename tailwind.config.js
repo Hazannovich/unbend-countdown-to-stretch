@@ -59,8 +59,6 @@ module.exports = {
                 'md': {'max': '767px'},
 
                 'sm': {'max': "639px"},
-
-
             },
             backgroundImage: {
                 'main': "url('src/bg-pic.jpg')",
