@@ -4,10 +4,6 @@
     font-family: 'Montserrat', sans-serif !important;
 }
 
-html {
-    color-scheme: dark-light;
-}
-
 /*input[type="number"] {*/
 /*    -webkit-appearance: textfield;*/
 /*    -moz-appearance: textfield;*/
@@ -18,56 +14,6 @@ html {
 /*!*input[type=number]::-webkit-outer-spin-button {*!*/
 /*!*    -webkit-appearance: none;*!*/
 /*!*}*!*/
-.fadeIn {
-    animation: 0.3s fadeIn forwards;
-}
-
-.fadeOut {
-    animation: 0.3s fadeOut forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translate(-300px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0px, 0px);
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translate(0px, 0px);
-    }
-    to {
-        transform: translate(300px, 0);
-        opacity: 0;
-    }
-}
-
-body {
-    background: url("bg-pic.jpg");
-    min-height: 100vh;
-}
-
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-img, picture, svg, video {
-    display: block;
-    max-width: 100%;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    font: inherit;
-}
-
 
 @tailwind base;
 @tailwind components;
