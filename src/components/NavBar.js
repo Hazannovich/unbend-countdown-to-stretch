@@ -16,7 +16,7 @@ const NavBar = (props) => {
         <div
             className="fixed container sm:text-base items-center mx-auto text-neutral-300">
             <Link to="/"
-                  className="px-5 badge badge-outline badge-lg  text-2xl sm:text-base  m-2 text-red-500">Unbend</Link>
+                  className="px-5 badge badge-outline badge-lg  text-2xl sm:text-base  m-2 text-red-500">uNbend</Link>
             {/*<img className={"static justify-items-start"} src="../logo.png" alt="logo" width={96} height={96}/>*/}
             <RotatedDiv>
                 <div className="flex h-screen w-screen justify-evenly ">

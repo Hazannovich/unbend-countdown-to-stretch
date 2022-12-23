@@ -6,10 +6,9 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                "primary": "#112B3C",
+                "primary": "#3e4450",
                 "secondary": "#F66B0E",
                 "logo": "#90a9d7",
-                "carving": "#8e6442",
             },
             rotate: {
                 '25': '25deg',

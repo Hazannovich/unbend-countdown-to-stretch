@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ActiveCard} from "../CostumDivs";
 
 
@@ -6,16 +6,35 @@ const Register = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const firstNameRef = useRef();
+    const nameRef = useRef();
+    const [newUser, setNewUser] = useState(false);
+    useEffect(() => {
+        if (newUser) {
+            fetch('http://127.0.0.1:5000/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+            })
+                .then(res => res.json())
+                .then(res => console.log(res));
+        }
+        setNewUser(false);
+    }, [newUser])
 
     function RegisterSubmitHandler(event) {
         event.preventDefault();
-        // const newAccount = {
-        //     email: emailRef.current.value,
-        //     password: passwordRef.current.value,
-        //     passwordConfirm: passwordConfirmRef.current.value,
-        //     firstName: firstNameRef.current.value
-        // }
+        setNewUser({
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+            passwordConfirm: passwordConfirmRef.current.value,
+            name: nameRef.current.value
+        });
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+        passwordConfirmRef.current.value = "";
+        nameRef.current.value = "";
     }
 
     return (<>
@@ -37,7 +56,7 @@ const Register = () => {
                                id="confirmPassword" name="confirmPassword"
                                placeholder="Confirm Password"/>
                         <br></br>
-                        <input ref={firstNameRef}
+                        <input ref={nameRef}
                                className={"input input-bordered w-full max-w-xs"}
                                type="text"
                                id="name"

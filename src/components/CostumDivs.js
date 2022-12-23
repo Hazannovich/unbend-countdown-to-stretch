@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import './CostumDivs.css';
 
 const RotateDiv = styled.div`
   transform: rotate(${props => (props.userInput === -2 ? props.degrees : (props.degrees !== 90 ? props.degrees * props.userInput : -90))}deg);
@@ -26,6 +27,7 @@ const RotateItemDiv = styled.div`
 export const SpanTimer = styled.span`
   --value: ${props => props.value};
 `;
+
 
 export const RotatedDiv = (props) => {
     let degree = Math.atan(window.innerHeight / window.innerWidth) * 180 / Math.PI
@@ -57,7 +59,8 @@ export const RotatedDiv = (props) => {
 
 export const ActiveCard = (props) => {
     return (
-        <div className="card overflow-scroll bg-base-100 shadow-xl">
+        <div className={"card " + (props.title ? "mask mask-circle " : "") + "shadow-inset-left bg-primary" +
+            " overflow-scroll bg-base-100 shadow-xl"}>
             <div className="card-body sm:p-5 h-[20rem] sm:h-[17rem] sm:w-[18rem] w-96">
                 {props.children}
             </div>
@@ -91,21 +94,21 @@ export const RotatedItemDiv = (props) => {
     )
 }
 
-export const Drawer = (props) => {
-    return (
-        <div className="drawer">
-            <input id="my-drawer" type="checkbox" className="drawer-toggle"/>
-            <div className="drawer-content">
-                {props.children}
-                <label htmlFor="my-drawer" className="btn btn-primary drawer-button">Open drawer</label>
-            </div>
-            <div className="drawer-side">
-                <label htmlFor="my-drawer" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-                    <li>Home</li>
-                    <li>Profile</li>
-                </ul>
-            </div>
-        </div>
-    )
-}
+// export const Drawer = (props) => {
+//     return (
+//         <div className="drawer">
+//             <input id="my-drawer" type="checkbox" className="drawer-toggle"/>
+//             <div className="drawer-content">
+//                 {props.children}
+//                 <label htmlFor="my-drawer" className="btn btn-primary drawer-button">Open drawer</label>
+//             </div>
+//             <div className="drawer-side">
+//                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
+//                 <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+//                     <li>Home</li>
+//                     <li>Profile</li>
+//                 </ul>
+//             </div>
+//         </div>
+//     )
+// }
