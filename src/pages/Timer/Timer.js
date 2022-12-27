@@ -73,34 +73,6 @@ const Timer = () => {
     totalTime.current = defaultTime;
   }
 
-  const DefaultTimeHandler = (amount) => {
-    setDefaultTime((curr) => {
-      if (180 >= curr + amount && curr + amount >= 1) {
-        return curr + amount;
-      }
-      return curr;
-    });
-    if (
-      !isStarted.current &&
-      180 >= defaultTime + amount &&
-      defaultTime + amount >= 1
-    ) {
-      setTimer(() => {
-        return { minutes: defaultTime + amount, seconds: 0 };
-      });
-      totalTime.current = defaultTime + amount;
-    }
-  };
-
-  const DefaultBreakTimeHandler = (amount) => {
-    return setDefaultBreakTime((curr) => {
-      if (180 >= curr + amount && curr + amount >= 1) {
-        return curr + amount;
-      }
-      return curr;
-    });
-  };
-
   if (isBreak) {
     return (
       <ActiveCard title="Stretch">
@@ -173,7 +145,6 @@ const Timer = () => {
             </div>
             <DefaultTimeButton
               title="Work"
-              TimeHandler={DefaultTimeHandler}
               time={defaultTime}
               setTime={setDefaultTime}
               isStarted={isStarted}
@@ -183,7 +154,6 @@ const Timer = () => {
             />
             <DefaultTimeButton
               title="Break"
-              TimeHandler={DefaultBreakTimeHandler}
               time={defaultBreakTime}
               setTime={setDefaultBreakTime}
               isStarted={isStarted}

@@ -3,13 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { regular, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 export const DefaultTimeButton = (props) => {
-  const HandleChange = (event) => {
-    props.setTime(event.target.value);
+  const HandleTime = (event) => {
+    if (event <= 180 && event >= 1) {
+      props.setTime(() => event);
+      if (!props.isStarted.current && props.title === "Work") {
+        props.setTimer(() => {
+          return { minutes: event, seconds: 0 };
+        });
+        props.totalTime.current = event;
+      }
+    }
+  };
+  const HandleUpdate = (event) => {
+    props.setTime(() => props.time + event);
     if (!props.isStarted.current && props.title === "Work") {
       props.setTimer(() => {
-        return { minutes: event.target.value, seconds: 0 };
+        return { minutes: props.time + event, seconds: 0 };
       });
-      props.totalTime.current = event.target.value;
+      props.totalTime.current = props.time + event;
     }
   };
   return (
@@ -19,15 +30,16 @@ export const DefaultTimeButton = (props) => {
           style={{ width: props.borderSize }}
           className="flex mx-auto justify-center border-dashed border-t-neutral-300 border-t-2"
         >
-          <label className="block">{props.title}</label>
+          <label className="flex mr-2 ">{props.title}</label>
+          <output>{props.time}</output>
         </div>
 
         <div className="flex justify-center items-center">
           <button
             className="btn-circle text-2xl px-auto btn btn-sm btn-ghost inline-block text-red-700"
-            onClick={() => props.TimeHandler(-1)}
+            onClick={() => HandleTime(parseInt(props.time - 1))}
           >
-            <FontAwesomeIcon icon={regular("circle-down")} />
+            <FontAwesomeIcon icon={regular("circle-left")} />
           </button>
           <input
             type="range"
@@ -35,15 +47,19 @@ export const DefaultTimeButton = (props) => {
             min="1"
             max="180"
             value={props.time}
-            className="range range-xs"
-            onChange={HandleChange}
+            oninput="this.nextElementSibling.value = this.value"
+            className={
+              (props.title === "Work" ? "w-52 sm:w-44" : "w-44 sm:w-32") +
+              " range range-xs"
+            }
+            onChange={(e) => HandleTime(parseInt(e.target.value))}
           />
 
           <button
             className="btn-circle text-2xl px-auto btn btn-sm btn-ghost inline-block text-green-600"
-            onClick={() => props.TimeHandler(1)}
+            onClick={() => HandleTime(parseInt(props.time + 1))}
           >
-            <FontAwesomeIcon icon={regular("circle-up")} />
+            <FontAwesomeIcon icon={regular("circle-right")} />
           </button>
         </div>
       </div>
@@ -55,14 +71,17 @@ export const SkipButton = (props) => {
   return (
     <>
       <button
-        className="btn-circle text-2xl px-auto btn btn-sm btn-ghost inline-block"
+        className="btn-circle  p-auto text-[1rem] btn btn-sm btn-ghost"
         onClick={() => {
           props.setTimer(() => {
             return { minutes: 0, seconds: 0 };
           });
         }}
       >
-        <FontAwesomeIcon icon={solid("forward")} />
+        <FontAwesomeIcon
+          className="border-solid border-primary border-[2.3px] rounded-full p-[0.2rem]"
+          icon={solid("forward")}
+        />
       </button>
     </>
   );
@@ -72,14 +91,17 @@ export const ResetButton = (props) => {
   return (
     <>
       <button
-        className="btn-circle text-2xl px-auto btn btn-sm btn-ghost inline-block"
+        className="btn-circle text-[1rem] p-auto btn btn-sm btn-ghost"
         onClick={() => {
           props.setIsReset(() => true);
           props.setIsActive(() => false);
           props.isStarted.current = false;
         }}
       >
-        <FontAwesomeIcon icon={solid("arrows-rotate")} />
+        <FontAwesomeIcon
+          className="border-solid border-primary border-[2.3px] rounded-full p-[0.2rem]"
+          icon={solid("arrows-rotate")}
+        />
       </button>
     </>
   );
@@ -89,7 +111,7 @@ export const PlayButton = (props) => {
   return (
     <>
       <button
-        className="btn flex justify-center btn-sm btn-circle text-2xl px-auto btn-ghost"
+        className="btn flex justify-center btn-sm btn-circle text-[1.67rem] p-auto btn-ghost"
         onClick={() => {
           props.setIsActive((currentIsActive) => !currentIsActive);
           props.isStarted.current = true;
