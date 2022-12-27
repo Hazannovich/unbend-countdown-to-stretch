@@ -94,13 +94,15 @@ const Timer = () => {
           className="fixed m-auto top-0 bottom-0 left-0 right-0 pointer-events-none text-secondary radial-progress"
           style={{ "--value": val, "--size": indSize, "--thickness": "3px" }}
         >
-          <div className="pointer-events-auto text-primary">
-            <div className="grid grid-flow-col pb-2 gap-0 justify-center text-center auto-cols-max">
+          <div className="pb-3 my-auto sm:pb-[1.5rem] px-auto pointer-events-auto text-primary">
+            <div className="grid mb-3 grid-flow-col gap-0 justify-center text-center auto-cols-max">
               <div className="flex flex-col">
                 <span
                   className={
-                    (isStarted.current ? "countdown " : "mx-[0.85rem] ") +
-                    "flex justify-center selection:font-mono text-5xl sm:text-3xl"
+                    (isStarted.current
+                      ? "countdown "
+                      : "mx-[0.85rem] sm:mx-[0.42rem] noCountdown ") +
+                    "flex justify-center selection:font-mono sm:mt-1  text-5xl sm:text-2xl"
                   }
                 >
                   {isStarted.current ? (
@@ -110,16 +112,16 @@ const Timer = () => {
                   )}
                 </span>
               </div>
-              <div className="">
-                <span className="flex justify-center font-mono text-5xl sm:text-3xl">
-                  :
-                </span>
-              </div>
+              <span className="flex justify-center font-mono text-5xl sm:text-2xl">
+                :
+              </span>
               <div className="flex justify-center flex-col">
                 <span
                   className={
-                    (timer.seconds !== 0 ? "countdown " : "mx-[0.55rem] ") +
-                    "flex justify-center selection:font-mono text-5xl sm:text-3xl"
+                    (timer.seconds !== 0
+                      ? "countdown "
+                      : "mx-[0.55rem] sm:mx-[0.28rem] noCountdown") +
+                    "flex justify-center selection:font-mono text-5xl sm:text-2xl"
                   }
                 >
                   {timer.seconds !== 0 ? (
@@ -130,16 +132,16 @@ const Timer = () => {
                 </span>
               </div>
             </div>
-            <div className="flex justify-center items-center">
-              <PlayButton
-                setIsActive={setIsActive}
-                isStarted={isStarted}
-                isActive={isActive}
-              />
+            <div className="flex justify-evenly items-center">
               <ResetButton
                 setIsReset={setIsReset}
                 setIsActive={setIsActive}
                 isStarted={isStarted}
+              />
+              <PlayButton
+                setIsActive={setIsActive}
+                isStarted={isStarted}
+                isActive={isActive}
               />
               <SkipButton setTimer={setTimer} />
             </div>

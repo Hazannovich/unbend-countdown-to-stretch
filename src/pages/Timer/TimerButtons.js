@@ -14,54 +14,38 @@ export const DefaultTimeButton = (props) => {
       }
     }
   };
-  const HandleUpdate = (event) => {
-    props.setTime(() => props.time + event);
-    if (!props.isStarted.current && props.title === "Work") {
-      props.setTimer(() => {
-        return { minutes: props.time + event, seconds: 0 };
-      });
-      props.totalTime.current = props.time + event;
-    }
-  };
   return (
     <>
-      <div className="justify-center items-center">
-        <div
-          style={{ width: props.borderSize }}
-          className="flex mx-auto justify-center border-dashed border-t-neutral-300 border-t-2"
+      <div className="divider p-0 m-0 flex justify-center pt-2">
+        {props.title}
+      </div>
+      <output className="flex justify-center font-bold">{props.time}</output>
+      <div className="flex justify-center items-center">
+        <button
+          className="btn-circle text-2xl p-auto btn btn-sm btn-ghost inline-block text-red-700"
+          onClick={() => HandleTime(parseInt(props.time - 1))}
         >
-          <label className="flex mr-2 ">{props.title}</label>
-          <output>{props.time}</output>
-        </div>
+          <FontAwesomeIcon icon={regular("circle-left")} />
+        </button>
+        <input
+          type="range"
+          step="1"
+          min="1"
+          max="180"
+          value={props.time}
+          className={
+            (props.title === "Work" ? "w-52 sm:w-44" : "w-40 sm:w-32") +
+            " range range-xs"
+          }
+          onChange={(e) => HandleTime(parseInt(e.target.value))}
+        />
 
-        <div className="flex justify-center items-center">
-          <button
-            className="btn-circle text-2xl px-auto btn btn-sm btn-ghost inline-block text-red-700"
-            onClick={() => HandleTime(parseInt(props.time - 1))}
-          >
-            <FontAwesomeIcon icon={regular("circle-left")} />
-          </button>
-          <input
-            type="range"
-            step="1"
-            min="1"
-            max="180"
-            value={props.time}
-            oninput="this.nextElementSibling.value = this.value"
-            className={
-              (props.title === "Work" ? "w-52 sm:w-44" : "w-44 sm:w-32") +
-              " range range-xs"
-            }
-            onChange={(e) => HandleTime(parseInt(e.target.value))}
-          />
-
-          <button
-            className="btn-circle text-2xl px-auto btn btn-sm btn-ghost inline-block text-green-600"
-            onClick={() => HandleTime(parseInt(props.time + 1))}
-          >
-            <FontAwesomeIcon icon={regular("circle-right")} />
-          </button>
-        </div>
+        <button
+          className="btn-circle text-2xl p-auto btn btn-sm btn-ghost inline-block text-green-600"
+          onClick={() => HandleTime(parseInt(props.time + 1))}
+        >
+          <FontAwesomeIcon icon={regular("circle-right")} />
+        </button>
       </div>
     </>
   );
@@ -71,7 +55,7 @@ export const SkipButton = (props) => {
   return (
     <>
       <button
-        className="btn-circle  p-auto text-[1rem] btn btn-sm btn-ghost"
+        className="btn-circle p-auto text-[1rem] btn btn-sm btn-ghost"
         onClick={() => {
           props.setTimer(() => {
             return { minutes: 0, seconds: 0 };
@@ -111,7 +95,7 @@ export const PlayButton = (props) => {
   return (
     <>
       <button
-        className="btn flex justify-center btn-sm btn-circle text-[1.67rem] p-auto btn-ghost"
+        className="btn flex btn-sm btn-circle text-[2rem]  p-auto btn-ghost"
         onClick={() => {
           props.setIsActive((currentIsActive) => !currentIsActive);
           props.isStarted.current = true;

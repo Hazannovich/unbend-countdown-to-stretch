@@ -14,14 +14,14 @@ const NavBar = (props) => {
     <div className="fixed container sm:text-base items-center mx-auto text-neutral-300">
       <Link
         to="/"
-        className="px-5 badge badge-outline badge-lg  text-2xl sm:text-base  m-2 text-red-500"
+        className="px-5 badge badge-outline badge-lg  sm:hidden text-2xl sm:text-base  m-2 text-red-500"
       >
         uNbend
       </Link>
       {/*<img className={"static justify-items-start"} src="../logo.png" alt="logo" width={96} height={96}/>*/}
       <RotatedDiv>
-        <div className="flex h-screen w-screen justify-evenly ">
-          <div className="flex sm:relative sm:right-[1rem] mr-auto sm:mx-0 sm:mr-0">
+        <div className="flex h-screen w-screen justify-evenly place-items-center sm:ml-[7.6rem]">
+          <div className="flex sm:relative sm:right-[2rem] mr-auto sm:mx-0">
             <RotatedItemDiv userInput={-1}>
               <NavButton itemTitle={itemMenu[0]} />
             </RotatedItemDiv>
@@ -39,7 +39,7 @@ const NavBar = (props) => {
               <NavButton itemTitle={itemMenu[2]} />
             </RotatedItemDiv>
           </div>
-          <div className="flex sm:relative sm:right-[4.5rem] ml-auto mr-1 sm:mx-0">
+          <div className="flex sm:relative sm:right-[4.5rem] ml-auto mr-20 sm:mr-2 sm:mx-0">
             <RotatedItemDiv userInput={-1}>
               {itemMenu[3] === "Logout" ? (
                 <Logout token={props.removeToken} />

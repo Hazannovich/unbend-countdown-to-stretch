@@ -83,7 +83,7 @@ export const ActiveCard = (props) => {
         "card " +
         (props.title ? "mask mask-circle " : "") +
         "shadow-inset-left bg-primary" +
-        " overflow-scroll bg-base-100 shadow-xl"
+        " overflow-scroll bg-base-100 shadow-xl place-items-center"
       }
     >
       <div className="card-body sm:p-5 h-[20rem] sm:h-[17rem] sm:w-[18rem] w-96">

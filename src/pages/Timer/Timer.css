@@ -17,3 +17,21 @@
   text-align: center;
   transition: all 1s cubic-bezier(1, 0, 0, 1);
 }
+
+:root .noCountdown {
+  line-height: 1em;
+}
+.noCountdown {
+  display: inline-flex;
+}
+.noCountdown > * {
+  height: 1em;
+  display: inline-block;
+  top: calc(var(--value) * -1em);
+  overflow-y: hidden;
+}
+.noCountdown > *:before {
+  position: relative;
+  white-space: pre;
+  text-align: center;
+}
