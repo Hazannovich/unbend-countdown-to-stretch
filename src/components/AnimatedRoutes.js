@@ -2,15 +2,16 @@ import React, { useEffect, useState, lazy } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "../index.css";
 import NavBar from "./NavBar";
-import useToken from "./useToken";
+import useToken from "../hooks/useToken";
+import { RouteIntroDiv } from "./ui/CostumDivs";
 // import {TransitionGroup, CSSTransition} from "react-transition-group";
 
-const Timer = lazy(() => import("./Timer/Timer"));
-const Login = lazy(() => import("./Accounts/Login"));
-const Register = lazy(() => import("./Accounts/Register"));
-const Contact = lazy(() => import("./Contact/Contact"));
-const About = lazy(() => import("./About/About"));
-const Profile = lazy(() => import("./Profile"));
+const Timer = lazy(() => import("../pages/Timer/Timer"));
+const Login = lazy(() => import("../pages/Accounts/Login"));
+const Register = lazy(() => import("../pages/Accounts/Register"));
+const Contact = lazy(() => import("../pages/Contact/Contact"));
+const About = lazy(() => import("../pages/About/About"));
+const Profile = lazy(() => import("../pages/Settings/Profile"));
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -30,14 +31,11 @@ const AnimatedRoutes = () => {
       token={token}
       removeToken={removeToken}
     >
-      <div
-        className={`${transitionStage}`}
-        onAnimationEnd={() => {
-          if (transitionStage === "fadeOut") {
-            setTransitionStage("fadeIn");
-            setDisplayLocation(location);
-          }
-        }}
+      <RouteIntroDiv
+        transitionStage={transitionStage}
+        setTransitionStage={setTransitionStage}
+        setDisplayLocation={setDisplayLocation}
+        location={location}
       >
         <>
           <Routes location={displayLocation} key={location.pathname}>
@@ -55,7 +53,7 @@ const AnimatedRoutes = () => {
             />
           </Routes>
         </>
-      </div>
+      </RouteIntroDiv>
     </NavBar>
   );
 };

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { ActiveCard } from "./CostumDivs";
+import { cleanup } from "@testing-library/react";
+import React, { useEffect, useState } from "react";
+import { ActiveCard } from "../../components/ui/CostumDivs";
 
 const Profile = (props) => {
   const [profileData, setProfileData] = useState(null);
-  function getData() {
+  useEffect(() => {
     fetch("http://127.0.0.1:5000/profile/", {
       method: "GET",
       headers: {
@@ -15,8 +16,8 @@ const Profile = (props) => {
       .then((data) => {
         props.token &&
           setProfileData({
-            profile_name: data.name,
-            about_me: data.about,
+            name: data.name,
+            email: data.email,
           });
       })
       .catch((error) => {
@@ -26,16 +27,15 @@ const Profile = (props) => {
           console.log(error.response.headers);
         }
       });
-  }
+    return () => cleanup();
+  });
   return (
     <ActiveCard>
-      <button className="btn" onClick={getData}>
-        Profile
-      </button>
+      <h1>Profile</h1>
       {profileData && (
         <div>
-          <p>Profile name: {profileData.profile_name}</p>
-          <p>About me: {profileData.about_me}</p>
+          <p>name: {profileData.name}</p>
+          <p>email: {profileData.email}</p>
         </div>
       )}
     </ActiveCard>

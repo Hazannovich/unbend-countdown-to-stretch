@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.5",
     "@tailwindcss/typography": "^0.5.8",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.13",
+    "babel-plugin-macros": "^3.1.0",
     "D": "^1.0.0",
     "daisyui": "^2.46.0",
     "framer-motion": "^7.10.0",
@@ -17,8 +22,11 @@
     "react": "^18.2.0",
     "react-countdown-circle-timer": "^3.1.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
+    "react-timeit": "^1.2.12",
+    "react-timepicker": "^2.0.2",
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.6",
     "tailwindcss": "^3.2.4",
@@ -50,5 +58,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "@klarr-agency/circum-icons-react": "^2.0.1"
+  }
 }

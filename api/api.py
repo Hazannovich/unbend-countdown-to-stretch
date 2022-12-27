@@ -1,21 +1,21 @@
 import json
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship, backref
 from flask_migrate import Migrate
 from flask_cors import CORS
 from sqlalchemy.dialects.postgresql import JSON
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
-                               unset_jwt_cookies, jwt_required, JWTManager
 from datetime import datetime, timedelta, timezone
+from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
+                               unset_jwt_cookies, jwt_required, JWTManager, current_user
 api = Flask(__name__)
 CORS(api)
 api.config.from_pyfile('/Users/israelos/unbend_config.py')
 
 db = SQLAlchemy(api)
 jwt = JWTManager(api)
-
-# migrate = Migrate(app, db)
+migrate = Migrate(api, db) 
 
 
 class User(db.Model):
@@ -24,11 +24,11 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    img_url = db.Column(db.String(250), nullable=True)
+    default_work = db.Column(db.Integer, nullable=False, default=25)
+    default_break = db.Column(db.Integer, nullable=False, default=5)
+    exercises = relationship("Exercise", secondary="exercises_for_user")
 
-    # many_to_user_relation = relationship("TABLE_CLASS_NAME", back_populates="user")
-
-    def __init__(self, name=None, email=None, password=None, img_url=None):
+    def __init__(self, name=None, email=None, password=None):
         self.email = email
         self.password = password
         self.name = name
@@ -36,9 +36,31 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.name
 
+class Exercise(db.Model):
+    __tablename__ = "exercises"
+    name = db.Column(db.String(100), primary_key=True)
+    description = db.Column(db.String(350), nullable=False)
+    users = relationship("User", secondary="exercises_for_users")
+
+class ExerciseForUser(db.Model):
+    __tablename__ = 'exercises_for_users'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    exercise_name = db.Column(db.String(100), db.ForeignKey('exercises.name'))
+    user = relationship(User, backref=backref("exercises_for_users", cascade="all, delete-orphan"))
+    exercise = relationship(Exercise, backref=backref("exercises_for_users", cascade="all, delete-orphan"))
+
 
 with api.app_context():
     db.create_all()
+
+@jwt.user_identity_loader
+def user_identity_lookup(user):
+    return user
+
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return User.query.filter_by(id=identity).first()
 
 @api.after_request
 def refresh_expiring_jwts(response):
@@ -72,7 +94,7 @@ def register_user():
     new_user = User(email=email, password=password, name=name)
     db.session.add(new_user)
     db.session.commit()
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=new_user.id)
     return {
         'access_token': access_token
         }
@@ -88,7 +110,7 @@ def login_user():
         return jsonify({'error': "User does not exists."}), 401
     if not check_password_hash(user.password, password):
         return jsonify({'error': "Incorrect Password/Email."}), 401
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=user.id)
     return {
         'access_token': access_token
     }
@@ -102,11 +124,53 @@ def logout():
 @api.route('/profile/')
 @jwt_required()
 def user_profile():
-    response_body = {
-        "name": "Nagato",
-        "about" :"Hello! I'm a full stack developer that loves python and javascript"
-    }
-    return response_body
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
 
+@api.route('/change-pass/', "PATCH")
+@jwt_required()
+def change_password():
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
+@api.route('/change-email/', methods=["PATCH"])
+@jwt_required()
+def change_email():
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
+@api.route('/change-work/', methods=["PATCH"])
+@jwt_required()
+def change_default_work():
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
+@api.route('/change-break/', methods=["PATCH"])
+@jwt_required()
+def change_default_break():
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
+@api.route('/hide-exercise-from-user/', methods=["DELETE"])
+@jwt_required()
+def hide_exercise_from_user():
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
+
+@api.route('/delete-user/', methods=["DELETE"])
+@jwt_required()
+def delete_user():
+    return jsonify(
+        name=current_user.name,
+        email=current_user.email,
+    )
 if __name__ == '__main__':
     api.run(debug=True)

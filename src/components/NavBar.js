@@ -1,8 +1,8 @@
 import React from "react";
 import NavButton from "./Buttons";
-import { RotatedDiv, RotatedItemDiv } from "./CostumDivs";
+import { RotatedDiv, RotatedItemDiv } from "./ui/CostumDivs";
 import { Link } from "react-router-dom";
-import Logout from "./Accounts/Logout";
+import Logout from "../pages/Accounts/Logout";
 
 const NavBar = (props) => {
   let itemMenu = ["Timer", "About", "Profile", "Logout"];
@@ -31,7 +31,7 @@ const NavBar = (props) => {
               <NavButton itemTitle={itemMenu[1]} />
             </RotatedItemDiv>
           </div>
-          <div className="flex mx-[3rem]  sm:w-[0rem] sm:mr-[6rem] sm:top-[0rem] sm:ml-0 sm:relative sm:top-0 sm:right-[5rem]">
+          <div className="flex mx-[3rem]  sm:w-[0rem] sm:mr-[6rem] sm:ml-0 sm:relative sm:top-0 sm:right-[5rem]">
             <RotatedItemDiv userInput={-1}>{props.children}</RotatedItemDiv>
           </div>
           <div className="flex  ml-auto sm:relative sm:right-[3rem] sm:mx-0">

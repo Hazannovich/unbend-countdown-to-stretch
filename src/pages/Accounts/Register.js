@@ -1,27 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ActiveCard } from "../CostumDivs";
+import { ActiveCard } from "../../components/ui/CostumDivs";
 
-const Login = (props) => {
+const Register = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [user, setUser] = useState(false);
+  const passwordConfirmRef = useRef();
+  const nameRef = useRef();
   const navigate = useNavigate();
-  if (user) {
-  }
 
-  const LoginSubmitHandler = (event) => {
+  function RegisterSubmitHandler(event) {
     event.preventDefault();
-    const user = {
+
+    const newUser = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
+      passwordConfirm: passwordConfirmRef.current.value,
+      name: nameRef.current.value,
     };
-    fetch("http://127.0.0.1:5000/login/", {
+    fetch("http://127.0.0.1:5000/register/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(newUser),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -36,33 +38,51 @@ const Login = (props) => {
       });
     emailRef.current.value = "";
     passwordRef.current.value = "";
+    passwordConfirmRef.current.value = "";
+    nameRef.current.value = "";
     navigate("/");
-  };
+  }
 
   return (
     <>
       <ActiveCard>
         <div className="form-control w-full max-w-xs">
-          <form onSubmit={LoginSubmitHandler}>
+          <form onSubmit={RegisterSubmitHandler}>
             <input
-              className="input input-bordered w-full max-w-xs"
               ref={emailRef}
               type="email"
+              className="input input-bordered w-full max-w-xs"
               id="email"
               name="email"
               placeholder="Email"
             />
             <input
-              className="input input-bordered w-full max-w-xs"
               ref={passwordRef}
+              className={"input input-bordered w-full max-w-xs"}
               type="password"
               id="password"
               name="password"
               placeholder="Password"
             />
+            <input
+              ref={passwordConfirmRef}
+              type="password"
+              className="input input-bordered w-full max-w-xs"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+            />
+            <input
+              ref={nameRef}
+              className={"input input-bordered w-full max-w-xs"}
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Name"
+            />
             <div className="mt-2 flex justify-center items-center">
-              <button className="btn glass btn-ghost" type="submit">
-                Login
+              <button className={"btn glass btn-ghost"} type="submit">
+                Register
               </button>
             </div>
           </form>
@@ -72,4 +92,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Register;

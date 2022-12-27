@@ -1,29 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ActiveCard } from "../CostumDivs";
+import { ActiveCard } from "../../components/ui/CostumDivs";
 
-const Register = (props) => {
+const Login = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const nameRef = useRef();
-  const [newUser, setNewUser] = useState(false);
   const navigate = useNavigate();
 
-  function RegisterSubmitHandler(event) {
+  const LoginSubmitHandler = (event) => {
     event.preventDefault();
-    const newUser = {
+    const user = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
-      passwordConfirm: passwordConfirmRef.current.value,
-      name: nameRef.current.value,
     };
-    fetch("http://127.0.0.1:5000/register/", {
+    fetch("http://127.0.0.1:5000/login/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(newUser),
+      body: JSON.stringify(user),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -38,51 +33,33 @@ const Register = (props) => {
       });
     emailRef.current.value = "";
     passwordRef.current.value = "";
-    passwordConfirmRef.current.value = "";
-    nameRef.current.value = "";
     navigate("/");
-  }
+  };
 
   return (
     <>
       <ActiveCard>
         <div className="form-control w-full max-w-xs">
-          <form onSubmit={RegisterSubmitHandler}>
+          <form onSubmit={LoginSubmitHandler}>
             <input
+              className="input input-bordered w-full max-w-xs"
               ref={emailRef}
               type="email"
-              className="input input-bordered w-full max-w-xs"
               id="email"
               name="email"
               placeholder="Email"
             />
             <input
+              className="input input-bordered w-full max-w-xs"
               ref={passwordRef}
-              className={"input input-bordered w-full max-w-xs"}
               type="password"
               id="password"
               name="password"
               placeholder="Password"
             />
-            <input
-              ref={passwordConfirmRef}
-              type="password"
-              className="input input-bordered w-full max-w-xs"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-            />
-            <input
-              ref={nameRef}
-              className={"input input-bordered w-full max-w-xs"}
-              type="text"
-              id="name"
-              name="name"
-              placeholder="First Name"
-            />
             <div className="mt-2 flex justify-center items-center">
-              <button className={"btn glass btn-ghost"} type="submit">
-                Register
+              <button className="btn glass btn-ghost" type="submit">
+                Login
               </button>
             </div>
           </form>
@@ -92,4 +69,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default Login;

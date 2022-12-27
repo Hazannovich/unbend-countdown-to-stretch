@@ -1,136 +1,136 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
 * {
-    font-family: 'Montserrat', sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 html {
-    background-image: url("../public/images/bg-pic.jpg");
+  background-image: url("./assets/images/bg-pic.jpg");
 }
 
 .fadeIn {
-    animation: fadeIn 0.5s forwards;
-    -webkit-animation: fadeIn 0.5s forwards;
-    -moz-animation: fadeIn 0.5s forwards;
-    -o-animation: fadeIn 0.5s forwards;
-    -ms-animation: fadeIn 0.5s forwards;
+  animation: fadeIn 0.5s forwards;
+  -webkit-animation: fadeIn 0.5s forwards;
+  -moz-animation: fadeIn 0.5s forwards;
+  -o-animation: fadeIn 0.5s forwards;
+  -ms-animation: fadeIn 0.5s forwards;
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translate(-200px, 0);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
 
 @-moz-keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translate(-200px, 0);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
 
 @-webkit-keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translate(-200px, 0);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
 
 @-o-keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translate(-200px, 0);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
 
 @-ms-keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translate(-200px, 0);
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+    transform: translate(-200px, 0);
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .fadeOut {
-    animation: fadeOut 0.5s forwards;
-    -webkit-animation: fadeOut 0.5s forwards;
-    -moz-animation: fadeOut 0.5s forwards;
-    -o-animation: fadeOut 0.5s forwards;
-    -ms-animation: fadeOut 0.5s forwards;
+  animation: fadeOut 0.5s forwards;
+  -webkit-animation: fadeOut 0.5s forwards;
+  -moz-animation: fadeOut 0.5s forwards;
+  -o-animation: fadeOut 0.5s forwards;
+  -ms-animation: fadeOut 0.5s forwards;
 }
 
 @keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: translate(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(200px, 0);
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(200px, 0);
+  }
 }
 
 @-moz-keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: translate(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(200px, 0);
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(200px, 0);
+  }
 }
 
 @-webkit-keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: translate(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(200px, 0);
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(200px, 0);
+  }
 }
 
 @-o-keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: translate(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(200px, 0);
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(200px, 0);
+  }
 }
 
 @-ms-keyframes fadeOut {
-    0% {
-        opacity: 1;
-        transform: translate(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(200px, 0);
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(200px, 0);
+  }
 }
 
 /*input[type="number"] {*/
@@ -143,7 +143,6 @@ html {
 /*!*input[type=number]::-webkit-outer-spin-button {*!*/
 /*!*    -webkit-appearance: none;*!*/
 /*!*}*!*/
-
 
 @tailwind base;
 @tailwind components;
