@@ -4,6 +4,7 @@ import "../index.css";
 import NavBar from "./NavBar";
 import useToken from "../hooks/useToken";
 import { RouteIntroDiv } from "./ui/CostumDivs";
+
 // import {TransitionGroup, CSSTransition} from "react-transition-group";
 
 const Timer = lazy(() => import("../pages/Timer/Timer"));

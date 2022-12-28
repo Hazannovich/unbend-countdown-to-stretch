@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import "./CostumDivs.css";
 
@@ -21,14 +21,7 @@ const RotateDiv = styled.div`
   width: 100%;
 `;
 const RotateItemDiv = styled.div`
-  transform: rotate(
-    ${(props) =>
-      props.userInput === -2
-        ? props.degrees
-        : props.degrees !== 90
-        ? props.degrees * props.userInput
-        : -90}deg
-  );
+  transform: rotate(${(props) => -props.degrees}deg);
   align-items: center;
   justify-content: center;
   display: flex;
@@ -49,7 +42,7 @@ export const RotatedDiv = (props) => {
     degree = 90;
   }
   const [degrees, setDegrees] = useState(degree);
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       let degrees =
         (Math.atan(window.innerHeight / window.innerWidth) * 180) / Math.PI;
@@ -99,7 +92,7 @@ export const RotatedItemDiv = (props) => {
     degree = 90;
   }
   const [degrees, setDegrees] = useState(degree);
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       let degrees =
         (Math.atan(window.innerHeight / window.innerWidth) * 180) / Math.PI;
@@ -114,16 +107,7 @@ export const RotatedItemDiv = (props) => {
     };
   });
 
-  return (
-    <RotateItemDiv
-      degrees={degrees}
-      userInput={
-        props.userInput || props.userInput === 0 ? props.userInput : -2
-      }
-    >
-      {props.children}
-    </RotateItemDiv>
-  );
+  return <RotateItemDiv degrees={degrees}>{props.children}</RotateItemDiv>;
 };
 
 export const RouteIntroDiv = (props) => {

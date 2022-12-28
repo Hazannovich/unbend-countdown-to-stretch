@@ -8,10 +8,13 @@ const Register = (props) => {
   const passwordConfirmRef = useRef();
   const nameRef = useRef();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const submitted = useRef(false);
 
   function RegisterSubmitHandler(event) {
     event.preventDefault();
-
+    submitted.current = true;
+    setLoading(true);
     const newUser = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -27,6 +30,7 @@ const Register = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        setLoading(false);
         props.setToken(data.access_token);
       })
       .catch((error) => {
@@ -36,13 +40,10 @@ const Register = (props) => {
           console.log(error.response.headers);
         }
       });
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-    passwordConfirmRef.current.value = "";
-    nameRef.current.value = "";
+  }
+  if (!loading && submitted) {
     navigate("/");
   }
-
   return (
     <>
       <ActiveCard>
@@ -87,6 +88,11 @@ const Register = (props) => {
             </div>
           </form>
         </div>
+        {loading && submitted ? (
+          <progress className="flex m-auto progress w-56"></progress>
+        ) : (
+          <h1></h1>
+        )}
       </ActiveCard>
     </>
   );

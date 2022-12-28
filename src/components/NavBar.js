@@ -3,7 +3,7 @@ import NavButton from "./Buttons";
 import { RotatedDiv, RotatedItemDiv } from "./ui/CostumDivs";
 import { Link } from "react-router-dom";
 import Logout from "../pages/Accounts/Logout";
-
+import Footer from "./Footer";
 const NavBar = (props) => {
   let itemMenu = ["Timer", "About", "Profile", "Logout"];
   if (!props.token || props.token === "" || props.token === undefined) {
@@ -18,16 +18,15 @@ const NavBar = (props) => {
       >
         uNbend
       </Link>
-      {/*<img className={"static justify-items-start"} src="../logo.png" alt="logo" width={96} height={96}/>*/}
       <RotatedDiv>
         <div className="flex h-screen w-screen justify-evenly place-items-center sm:ml-[7.6rem]">
           <div className="flex sm:relative sm:right-[2rem] mr-auto sm:mx-0">
-            <RotatedItemDiv userInput={-1}>
+            <RotatedItemDiv>
               <NavButton itemTitle={itemMenu[0]} />
             </RotatedItemDiv>
           </div>
           <div className="flex sm:relative mr-auto sm:mr-[10rem] sm:right-[3rem] sm:ml-0">
-            <RotatedItemDiv userInput={-1}>
+            <RotatedItemDiv>
               <NavButton itemTitle={itemMenu[1]} />
             </RotatedItemDiv>
           </div>
@@ -35,12 +34,12 @@ const NavBar = (props) => {
             <RotatedItemDiv userInput={-1}>{props.children}</RotatedItemDiv>
           </div>
           <div className="flex  ml-auto sm:relative sm:right-[3rem] sm:mx-0">
-            <RotatedItemDiv userInput={-1}>
+            <RotatedItemDiv>
               <NavButton itemTitle={itemMenu[2]} />
             </RotatedItemDiv>
           </div>
           <div className="flex sm:relative sm:right-[4.5rem] ml-auto mr-20 sm:mr-2 sm:mx-0">
-            <RotatedItemDiv userInput={-1}>
+            <RotatedItemDiv>
               {itemMenu[3] === "Logout" ? (
                 <Logout token={props.removeToken} />
               ) : (

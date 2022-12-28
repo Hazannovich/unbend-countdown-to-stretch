@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ActiveCard } from "../../components/ui/CostumDivs";
 
@@ -6,9 +6,12 @@ const Login = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
+  const submitted = useRef(false);
   const LoginSubmitHandler = (event) => {
     event.preventDefault();
+    submitted.current = true;
+    setLoading(true);
     const user = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -22,7 +25,10 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        props.setToken(data.access_token);
+        setTimeout(() => {
+          setLoading(false);
+          props.setToken(data.access_token);
+        }, 2000);
       })
       .catch((error) => {
         if (error.response) {
@@ -31,11 +37,11 @@ const Login = (props) => {
           console.log(error.response.headers);
         }
       });
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-    navigate("/");
   };
 
+  if (!loading && submitted) {
+    navigate("/");
+  }
   return (
     <>
       <ActiveCard>
@@ -64,6 +70,11 @@ const Login = (props) => {
             </div>
           </form>
         </div>
+        {loading && submitted ? (
+          <progress className="flex m-auto progress w-56"></progress>
+        ) : (
+          <h1></h1>
+        )}
       </ActiveCard>
     </>
   );

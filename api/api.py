@@ -21,20 +21,14 @@ migrate = Migrate(api, db)
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(350), unique=True)
     password = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     default_work = db.Column(db.Integer, nullable=False, default=25)
     default_break = db.Column(db.Integer, nullable=False, default=5)
-    exercises = relationship("Exercise", secondary="exercises_for_user")
+    exercises = relationship("Exercise", secondary="exercises_for_users")
 
-    def __init__(self, name=None, email=None, password=None):
-        self.email = email
-        self.password = password
-        self.name = name
 
-    def __repr__(self):
-        return '<User %r>' % self.name
 
 class Exercise(db.Model):
     __tablename__ = "exercises"
@@ -42,8 +36,10 @@ class Exercise(db.Model):
     description = db.Column(db.String(350), nullable=False)
     users = relationship("User", secondary="exercises_for_users")
 
+
 class ExerciseForUser(db.Model):
     __tablename__ = 'exercises_for_users'
+    id = db.Column(db.Integer, primary_key=True) 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     exercise_name = db.Column(db.String(100), db.ForeignKey('exercises.name'))
     user = relationship(User, backref=backref("exercises_for_users", cascade="all, delete-orphan"))
@@ -127,50 +123,53 @@ def user_profile():
     return jsonify(
         name=current_user.name,
         email=current_user.email,
+        password=current_user.password,
+        default_work=current_user.default_work,
+        default_break=current_user.default_break,
     )
 
-@api.route('/change-pass/', "PATCH")
-@jwt_required()
-def change_password():
-    return jsonify(
-        name=current_user.name,
-        email=current_user.email,
-    )
-@api.route('/change-email/', methods=["PATCH"])
-@jwt_required()
-def change_email():
-    return jsonify(
-        name=current_user.name,
-        email=current_user.email,
-    )
-@api.route('/change-work/', methods=["PATCH"])
-@jwt_required()
-def change_default_work():
-    return jsonify(
-        name=current_user.name,
-        email=current_user.email,
-    )
-@api.route('/change-break/', methods=["PATCH"])
-@jwt_required()
-def change_default_break():
-    return jsonify(
-        name=current_user.name,
-        email=current_user.email,
-    )
-@api.route('/hide-exercise-from-user/', methods=["DELETE"])
-@jwt_required()
-def hide_exercise_from_user():
-    return jsonify(
-        name=current_user.name,
-        email=current_user.email,
-    )
+# @api.route('/change-pass/', "PATCH")
+# @jwt_required()
+# def change_password():
+#     return jsonify(
+#         name=current_user.name,
+#         email=current_user.email,
+#     )
+# @api.route('/change-email/', methods=["PATCH"])
+# @jwt_required()
+# def change_email():
+#     return jsonify(
+#         name=current_user.name,
+#         email=current_user.email,
+#     )
+# @api.route('/change-work/', methods=["PATCH"])
+# @jwt_required()
+# def change_default_work():
+#     return jsonify(
+#         name=current_user.name,
+#         email=current_user.email,
+#     )
+# @api.route('/change-break/', methods=["PATCH"])
+# @jwt_required()
+# def change_default_break():
+#     return jsonify(
+#         name=current_user.name,
+#         email=current_user.email,
+#     )
+# @api.route('/hide-exercise-from-user/', methods=["DELETE"])
+# @jwt_required()
+# def hide_exercise_from_user():
+#     return jsonify(
+#         name=current_user.name,
+#         email=current_user.email,
+#     )
 
-@api.route('/delete-user/', methods=["DELETE"])
-@jwt_required()
-def delete_user():
-    return jsonify(
-        name=current_user.name,
-        email=current_user.email,
-    )
+# @api.route('/delete-user/', methods=["DELETE"])
+# @jwt_required()
+# def delete_user():
+#     return jsonify(
+#         name=current_user.name,
+#         email=current_user.email,
+#     )
 if __name__ == '__main__':
     api.run(debug=True)

@@ -3,7 +3,6 @@ import { ActiveCard, SpanTimer } from "../../components/ui/CostumDivs";
 import Beep from "./beepbeep.mp3";
 import { Stretch } from "./StretchList";
 import useSound from "use-sound";
-import { cleanup } from "@testing-library/react";
 import {
   DefaultTimeButton,
   PlayButton,
@@ -35,18 +34,17 @@ const Timer = () => {
     ((totalTime.current - (timer.minutes + secondsValue)) / totalTime.current) *
     100;
   useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      if (isActive) {
+    if (isActive) {
+      intervalRef.current = setInterval(() => {
         if (timer.seconds === 0 && timer.minutes !== 0) {
           setTimer({ minutes: timer.minutes - 1, seconds: 59 });
         } else if (timer.seconds !== 0) {
           setTimer({ minutes: timer.minutes, seconds: timer.seconds - 1 });
         }
-      }
-    }, 1000);
+      }, 1000);
+    }
     return () => {
       clearInterval(intervalRef.current);
-      cleanup();
     };
   }, [isActive, timer]);
 

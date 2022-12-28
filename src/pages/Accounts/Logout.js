@@ -22,7 +22,7 @@ function Logout(props) {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <NavLink className="btn btn-md sm:btn-sm" onClick={logMeOut} to="/">
+        <NavLink className="btn btn-md " onClick={logMeOut} to="/">
           Logout
         </NavLink>
       </Suspense>
