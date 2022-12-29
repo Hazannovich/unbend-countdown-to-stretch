@@ -14,31 +14,31 @@ const NavBar = (props) => {
     <div className="fixed container sm:text-base items-center mx-auto text-neutral-300">
       <Link
         to="/"
-        className="px-5 badge badge-outline badge-lg  sm:hidden text-2xl sm:text-base  m-2 text-red-500"
+        className="px-5 fixed badge badge-outline badge-lg  sm:hidden text-2xl sm:text-base  m-2 text-red-500"
       >
-        uNbend
+        uNbendEx
       </Link>
       <RotatedDiv>
-        <div className="flex h-screen w-screen justify-evenly place-items-center sm:ml-[7.6rem]">
-          <div className="flex sm:relative sm:right-[2rem] mr-auto sm:mx-0">
+        <div className="flex h-screen w-screen justify-evenly place-items-center lg:ml-[7.6rem]">
+          <div className="flex sm:relative sm:right-[2rem] mx-auto">
             <RotatedItemDiv>
               <NavButton itemTitle={itemMenu[0]} />
             </RotatedItemDiv>
           </div>
-          <div className="flex sm:relative mr-auto sm:mr-[10rem] sm:right-[3rem] sm:ml-0">
+          <div className="flex sm:relative mx-auto sm:mr-[10rem] sm:right-[3rem] sm:ml-0">
             <RotatedItemDiv>
               <NavButton itemTitle={itemMenu[1]} />
             </RotatedItemDiv>
           </div>
-          <div className="flex mx-[3rem]  sm:w-[0rem] sm:mr-[6rem] sm:ml-0 sm:relative sm:top-0 sm:right-[5rem]">
+          <div className="flex mx-auto  sm:w-[0rem] sm:mr-[6rem] sm:ml-0 sm:relative sm:top-0 sm:right-[5rem]">
             <RotatedItemDiv userInput={-1}>{props.children}</RotatedItemDiv>
           </div>
-          <div className="flex  ml-auto sm:relative sm:right-[3rem] sm:mx-0">
+          <div className="flex mx-auto sm:relative sm:right-[3rem] sm:mx-0">
             <RotatedItemDiv>
               <NavButton itemTitle={itemMenu[2]} />
             </RotatedItemDiv>
           </div>
-          <div className="flex sm:relative sm:right-[4.5rem] ml-auto mr-20 sm:mr-2 sm:mx-0">
+          <div className="flex sm:relative sm:right-[4.5rem] mx-auto sm:mr-2 sm:mx-0">
             <RotatedItemDiv>
               {itemMenu[3] === "Logout" ? (
                 <Logout token={props.removeToken} />

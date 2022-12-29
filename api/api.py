@@ -27,6 +27,7 @@ class User(db.Model):
     default_work = db.Column(db.Integer, nullable=False, default=25)
     default_break = db.Column(db.Integer, nullable=False, default=5)
     exercises = relationship("Exercise", secondary="exercises_for_users")
+    # time_per_exercise = db.Column(db.Integer, nullable=False, default=1)
 
 
 
@@ -117,13 +118,20 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
+@api.route('/confirm-pass/', methods=["POST"])
+@jwt_required()
+def confirm_pass():
+    req = request.json
+    password = req["password"]
+    return jsonify(check_password_hash(current_user.password, password))
+
+
 @api.route('/profile/')
 @jwt_required()
 def user_profile():
     return jsonify(
         name=current_user.name,
         email=current_user.email,
-        password=current_user.password,
         default_work=current_user.default_work,
         default_break=current_user.default_break,
     )

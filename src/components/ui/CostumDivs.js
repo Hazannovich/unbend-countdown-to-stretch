@@ -79,7 +79,15 @@ export const ActiveCard = (props) => {
         " overflow-scroll bg-base-100 shadow-xl place-items-center"
       }
     >
-      <div className="card-body sm:p-5 h-[20rem] sm:h-[17rem] sm:w-[18rem] w-96">
+      <div
+        className={
+          "card-body lg:p-5 h-[20rem] " +
+          (props.title
+            ? "sm:h-[17rem] sm:w-[18rem]"
+            : "lg:h-[17rem] lg:w-[18rem]") +
+          " place-items-center w-96"
+        }
+      >
         {props.children}
       </div>
     </div>

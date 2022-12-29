@@ -1,13 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ActiveCard } from "../../components/ui/CostumDivs";
-
+import { InputGroupField } from "../../components/ui/CostumInputs";
+import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 const Login = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const submitted = useRef(false);
+  useEffect(() => {
+    if (!loading && submitted.current) {
+      navigate("/");
+      return () => (submitted.current = false);
+    }
+  }, [loading, submitted]);
   const LoginSubmitHandler = (event) => {
     event.preventDefault();
     submitted.current = true;
@@ -39,41 +46,32 @@ const Login = (props) => {
       });
   };
 
-  if (!loading && submitted) {
-    navigate("/");
-  }
   return (
     <>
       <ActiveCard>
-        <div className="form-control w-full max-w-xs">
-          <form onSubmit={LoginSubmitHandler}>
-            <input
-              className="input input-bordered w-full max-w-xs"
-              ref={emailRef}
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-            />
-            <input
-              className="input input-bordered w-full max-w-xs"
-              ref={passwordRef}
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-            />
-            <div className="mt-2 flex justify-center items-center">
-              <button className="btn glass btn-ghost" type="submit">
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
+        <form className="w-full m-auto" onSubmit={LoginSubmitHandler}>
+          <InputGroupField
+            icon={solid("envelope")}
+            type="text"
+            forwardRef={emailRef}
+            placeholder="Email"
+          />
+          <InputGroupField
+            icon={solid("key")}
+            type="password"
+            forwardRef={passwordRef}
+            placeholder="Password"
+          />
+          <div className="mt-2 flex justify-center items-center">
+            <button className="btn " type="submit">
+              Login
+            </button>
+          </div>
+        </form>
         {loading && submitted ? (
           <progress className="flex m-auto progress w-56"></progress>
         ) : (
-          <h1></h1>
+          <h1 className="flex m-auto progress w-56"></h1>
         )}
       </ActiveCard>
     </>
