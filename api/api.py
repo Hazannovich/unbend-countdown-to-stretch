@@ -103,10 +103,8 @@ def login_user():
     email = req["email"]
     password = req["password"]
     user = User.query.filter_by(email=email).first()
-    if user is None:
-        return jsonify({'error': "User does not exists."}), 401
-    if not check_password_hash(user.password, password):
-        return jsonify({'error': "Incorrect Password/Email."}), 401
+    if user is None or not check_password_hash(user.password, password):
+        return jsonify({'error': "Incorrect Email/Password."}), 401
     access_token = create_access_token(identity=user.id)
     return {
         'access_token': access_token

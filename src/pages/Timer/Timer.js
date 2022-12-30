@@ -13,63 +13,60 @@ import "./Timer.css";
 const Timer = () => {
   const [defaultTime, setDefaultTime] = useState(25);
   const [defaultBreakTime, setDefaultBreakTime] = useState(5);
-  const [timer, setTimer] = useState({ minutes: defaultTime, seconds: 0 });
+  const [timer, setTimer] = useState(defaultTime * 60);
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   const [isReset, setIsReset] = useState(false);
   const isStarted = useRef(false);
   const [beep] = useSound(Beep, { volume: 0.25 });
   const totalTime = useRef(defaultTime);
-  const intervalRef = useRef();
-  const seconds = timer.seconds.toLocaleString("en-US", {
+  let intervalRef = useRef();
+  const seconds = (timer % 60).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
   });
-  const minutes = timer.minutes.toLocaleString("en-US", {
+  const minutes = Math.floor(timer / 60).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
   });
   const indSize = window.innerWidth <= 639 ? "16rem" : "19rem";
   const borderSize = window.innerWidth <= 639 ? "13rem" : "16rem";
-  const secondsValue = timer.seconds / 60;
+  const secondsValue = (timer % 60) / 60;
+  const minutesValue = Math.floor(timer / 60);
   const val =
-    ((totalTime.current - (timer.minutes + secondsValue)) / totalTime.current) *
+    ((totalTime.current - (minutesValue + secondsValue)) / totalTime.current) *
     100;
+  const DecreaseTime = () => setTimer((prev) => prev - 1);
   useEffect(() => {
     if (isActive) {
-      intervalRef.current = setInterval(() => {
-        if (timer.seconds === 0 && timer.minutes !== 0) {
-          setTimer({ minutes: timer.minutes - 1, seconds: 59 });
-        } else if (timer.seconds !== 0) {
-          setTimer({ minutes: timer.minutes, seconds: timer.seconds - 1 });
-        }
-      }, 1000);
+      intervalRef.current = setInterval(DecreaseTime, 1000);
     }
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [isActive, timer]);
+    return () => clearInterval(intervalRef.current);
+  }, [isActive]);
 
-  if (timer.minutes === 0 && timer.seconds === 0) {
+  if (timer === 0) {
     setIsBreak((currentStatus) => !currentStatus);
     if (!isBreak) {
-      setTimer(() => {
-        return { minutes: defaultBreakTime, seconds: 0 };
-      });
+      setTimer(() => defaultBreakTime * 60);
       totalTime.current = defaultBreakTime;
     } else {
-      setTimer(() => {
-        return { minutes: defaultTime, seconds: 0 };
-      });
+      setTimer(() => defaultTime * 60);
       totalTime.current = defaultTime;
     }
     beep();
   }
   if (isReset) {
     setIsReset(() => false);
-    setTimer(() => {
-      return { minutes: defaultTime, seconds: 0 };
-    });
+    setTimer(() => defaultTime * 60);
     totalTime.current = defaultTime;
   }
+  const HandlePlayClick = () => {
+    if (isActive) {
+      clearInterval(intervalRef.current);
+    } else {
+      intervalRef.current = setInterval(DecreaseTime, 1000);
+    }
+    setIsActive((currentIsActive) => !currentIsActive);
+    isStarted.current = true;
+  };
 
   if (isBreak) {
     return (
@@ -137,9 +134,8 @@ const Timer = () => {
                 isStarted={isStarted}
               />
               <PlayButton
-                setIsActive={setIsActive}
-                isStarted={isStarted}
                 isActive={isActive}
+                HandlePlayClick={HandlePlayClick}
               />
               <SkipButton setTimer={setTimer} />
             </div>

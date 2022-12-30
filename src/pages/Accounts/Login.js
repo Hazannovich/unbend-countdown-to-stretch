@@ -2,19 +2,28 @@ import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ActiveCard } from "../../components/ui/CostumDivs";
 import { InputGroupField } from "../../components/ui/CostumInputs";
-import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 const Login = (props) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const submitted = useRef(false);
+  const msg = useRef("");
   useEffect(() => {
-    if (!loading && submitted.current) {
+    if (
+      !loading &&
+      submitted.current &&
+      !(msg.current !== "" && msg.current !== undefined && msg)
+    ) {
       navigate("/");
-      return () => (submitted.current = false);
+      return () => {
+        submitted.current = false;
+        setLoading(false);
+        msg.current = "";
+      };
     }
-  }, [loading, submitted]);
+  }, [loading, submitted, navigate]);
   const LoginSubmitHandler = (event) => {
     event.preventDefault();
     submitted.current = true;
@@ -32,6 +41,7 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        msg.current = data.error;
         setTimeout(() => {
           setLoading(false);
           props.setToken(data.access_token);
@@ -45,11 +55,15 @@ const Login = (props) => {
         }
       });
   };
-
+  // {window.flash("record has been created successfully!", "success")}
+  console.log(msg.current);
   return (
     <>
       <ActiveCard>
-        <form className="w-full m-auto" onSubmit={LoginSubmitHandler}>
+        <h2 className="text-amber-700 flex fixed m-auto justify-center h-6 w-56">
+          {msg ? msg.current : " "}
+        </h2>
+        <form className="w-full m-auto " onSubmit={LoginSubmitHandler}>
           <InputGroupField
             icon={solid("envelope")}
             type="text"
@@ -71,7 +85,7 @@ const Login = (props) => {
         {loading && submitted ? (
           <progress className="flex m-auto progress w-56"></progress>
         ) : (
-          <h1 className="flex m-auto progress w-56"></h1>
+          <h1 className="flex m-auto progress w-56"> </h1>
         )}
       </ActiveCard>
     </>

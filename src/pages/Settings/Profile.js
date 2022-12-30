@@ -1,4 +1,3 @@
-import { cleanup } from "@testing-library/react";
 import React, { useEffect, useState, useRef } from "react";
 import useFetch from "../../hooks/useFetch";
 import { ActiveCard } from "../../components/ui/CostumDivs";
@@ -21,6 +20,7 @@ const Profile = (props) => {
   const ConfirmSubmitHandler = (event) => {
     const password = { password: passwordConfirmRef.current.value };
     event.preventDefault();
+    setLoading(() => true);
     fetch("http://127.0.0.1:5000/confirm-pass/", {
       method: "POST",
       headers: {
@@ -31,7 +31,10 @@ const Profile = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setPasswordConfirmed(data);
+        setTimeout(() => {
+          setPasswordConfirmed(data);
+          setLoading(() => false);
+        }, 2000);
       })
       .catch((error) => {
         if (error.response) {

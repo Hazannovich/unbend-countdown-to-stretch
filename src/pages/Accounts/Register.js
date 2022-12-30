@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { ActiveCard } from "../../components/ui/CostumDivs";
 import { InputGroupField } from "../../components/ui/CostumInputs";
 const Register = (props) => {
@@ -16,7 +16,7 @@ const Register = (props) => {
       navigate("/");
       return () => (submitted.current = false);
     }
-  }, [loading, submitted]);
+  }, [loading, submitted, navigate]);
   function RegisterSubmitHandler(event) {
     event.preventDefault();
     submitted.current = true;
@@ -84,7 +84,7 @@ const Register = (props) => {
       {loading && submitted ? (
         <progress className="flex m-auto progress w-56"></progress>
       ) : (
-        <h1 className="flex m-auto progress w-56"></h1>
+        <h1 className="flex m-auto progress w-56"> </h1>
       )}
     </ActiveCard>
   );

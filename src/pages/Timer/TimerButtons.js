@@ -96,10 +96,7 @@ export const PlayButton = (props) => {
     <>
       <button
         className="btn flex btn-sm btn-circle text-[2rem]  p-auto btn-ghost"
-        onClick={() => {
-          props.setIsActive((currentIsActive) => !currentIsActive);
-          props.isStarted.current = true;
-        }}
+        onClick={props.HandlePlayClick}
       >
         {props.isActive ? (
           <FontAwesomeIcon
